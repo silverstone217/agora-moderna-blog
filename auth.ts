@@ -1,5 +1,5 @@
 // auth.ts
-import NextAuth from "next-auth";
+import NextAuth, { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./lib/prisma";
@@ -8,6 +8,8 @@ import {
   GOOGLE_CLIENT_SECRET,
   SECRET_KEY,
 } from "./lib/envVariables";
+import type { JWT } from "next-auth/jwt";
+import { roleUserType } from "./types/auth";
 
 const authConfig = {
   adapter: PrismaAdapter(prisma),
@@ -29,7 +31,31 @@ const authConfig = {
   ],
   secret: SECRET_KEY, // Clé secrète pour sécuriser les tokens
   callbacks: {
-    // Optionnel : personnaliser les callbacks si besoin (ex: session, jwt)
+    async session({ token, session }: { token: JWT; session: Session }) {
+      if (token && session.user) {
+        const tokenId = token.sub;
+        if (tokenId) {
+          const user = await prisma.user.findUnique({
+            where: {
+              id: tokenId,
+            },
+          });
+          if (user) {
+            session.user = {
+              id: user.id,
+              name: user.name,
+              email: user.email ? user.email : "",
+              emailVerified: user.emailVerified,
+              image: user.image,
+              role: user.role as roleUserType,
+              createdAt: user.createdAt,
+              updatedAt: user.updatedAt,
+            };
+          }
+        }
+      }
+      return session;
+    },
   },
 };
 

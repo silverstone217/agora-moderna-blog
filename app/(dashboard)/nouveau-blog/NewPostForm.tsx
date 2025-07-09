@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useMemo, useState } from "react";
 import {
   Card,
@@ -13,13 +12,15 @@ import { playfairDisplay } from "@/utils/fonts";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import SelectCategory from "@/components/blogs/SelectCategory";
-import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { isEmpyString } from "@/utils/functions";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import MarkdownInput from "@/components/blogs/markdown/MarkdownInput";
+import { addNewBlog, AddNewBlogType } from "@/actions/blogs";
+import { useRouter } from "next/navigation";
 
 const NewPostForm = () => {
   const [title, setTitle] = useState("");
@@ -30,6 +31,7 @@ const NewPostForm = () => {
   const [image, setImage] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const isButtonAddDisabled = useMemo(() => {
     if (loading) return true;
@@ -48,7 +50,7 @@ const NewPostForm = () => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const formData = {
+      const formData: AddNewBlogType = {
         tags,
         title,
         category,
@@ -57,15 +59,19 @@ const NewPostForm = () => {
         image,
       };
 
-      // Simule une requête réseau
-      setTimeout(() => {
-        console.log(formData);
-        toast.success("Article ajouté avec succès !");
-        setLoading(false);
-      }, 2000);
+      const result = await addNewBlog(formData);
+
+      if (result.error) {
+        toast.success(result.message);
+        return;
+      }
+
+      toast.success("Article ajouté avec succès !");
+      router.refresh();
     } catch (error) {
       console.error(error);
       toast.error("Oops!", { description: "Impossible d'ajouter un article" });
+    } finally {
       setLoading(false);
     }
   };
@@ -134,7 +140,12 @@ const NewPostForm = () => {
         {/* Contenu */}
         <div className="grid w-full items-center gap-2">
           <Label htmlFor="content">Contenu</Label>
-          <Textarea
+          <MarkdownInput
+            value={content}
+            onChange={(val) => setContent(val || "")}
+            disabled={loading}
+          />
+          {/* <Textarea
             id="content"
             placeholder="ex: Le magicien d'Oz venait de me dire un secret incroyable"
             value={content}
@@ -145,7 +156,7 @@ const NewPostForm = () => {
             minLength={1}
             className="min-h-[16rem] max-h-[24rem]"
             disabled={loading}
-          />
+          /> */}
         </div>
 
         {/* Tags */}
