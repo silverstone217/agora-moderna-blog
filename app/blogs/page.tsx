@@ -1,6 +1,7 @@
 import { getAllPost } from "@/actions/blogs";
-import MarkdownRenderer from "@/components/blogs/markdown/MarkdownRenderer";
-import React, { Suspense } from "react";
+// import MarkdownRenderer from "@/components/blogs/markdown/MarkdownRenderer";
+import React from "react";
+import MainBlogs from "./MainBlogs";
 
 async function BlogPage() {
   const blogs = await getAllPost();
@@ -14,19 +15,9 @@ async function BlogPage() {
   }
 
   return (
-    <Suspense>
-      <div className="max-w-6xl mx-auto p-4 pt-16 grid gap-16">
-        {blogs.map((blog) => (
-          <div key={blog.id} className="py-4 border-b-2 flex flex-col gap-2">
-            <h2 className="text-2xl font-bold capitalize">{blog.title}</h2>
-            <p>{blog.category}</p>
-
-            {/* content */}
-            <MarkdownRenderer content={blog.content} />
-          </div>
-        ))}
-      </div>
-    </Suspense>
+    <div className=" p-4">
+      <MainBlogs blogs={blogs} />
+    </div>
   );
 }
 

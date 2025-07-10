@@ -19,7 +19,7 @@ const SelectCategory = ({ category, disabled, setCategory }: Props) => {
   return (
     <Select
       disabled={disabled}
-      defaultValue={category}
+      value={category}
       onValueChange={(val) => setCategory(val)}
     >
       <SelectTrigger className="w-full">

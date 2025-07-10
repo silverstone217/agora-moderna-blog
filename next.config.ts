@@ -9,8 +9,6 @@ const nextConfig: NextConfig = {
     SECRET_KEY: process.env.SECRET_KEY,
   },
   images: {
-    // Vous pouvez commenter ou garder les domains si besoin
-    // domains: ['firebasestorage.googleapis.com', 'lh3.googleusercontent.com'],
     remotePatterns: [
       {
         protocol: "https",
@@ -21,6 +19,18 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "3eqaz12yan4rgf7v.public.blob.vercel-storage.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
         port: "",
         pathname: "/**",
       },

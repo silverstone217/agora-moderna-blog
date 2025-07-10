@@ -1,3 +1,6 @@
+import { LucideProps } from "lucide-react";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
+
 export const isEmpyString = (str: string) => str.replace(/ /, "") === "";
 
 // title to slug + random numbers
@@ -37,4 +40,27 @@ export function cleanTags(tagsInput: string): string {
 
   // Rejoint en chaîne séparée par des virgules et espaces
   return uniqueTags.join(", ");
+}
+
+// capitalize first letter
+export function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// return Data by value
+type DataValueType = {
+  label: string;
+  value: string;
+  icon?: ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+  >;
+  color?: string;
+};
+export function returnDataByValue(
+  data: DataValueType[],
+  value: string
+): DataValueType {
+  const result = data.find((item) => item.value === value);
+
+  return result || { label: "", value: "" };
 }
