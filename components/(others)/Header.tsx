@@ -22,7 +22,7 @@ const Header = () => {
      transition-all duration-300 ease-in-out backdrop-blur-2xl
     "
     >
-      <div className="px-4  w-full flex h-full items-center justify-between">
+      <div className="px-4  w-full flex h-full items-center justify-between mx-auto max-w-7xl">
         {/* link home logo */}
         <Link
           href={"/"}

@@ -67,6 +67,13 @@ const NewPostForm = () => {
       }
 
       toast.success("Article ajouté avec succès !");
+      setTitle("");
+      setContent("");
+      setCategory("");
+      setTags("");
+      setIsPublished(false);
+      setImage("");
+
       router.refresh();
     } catch (error) {
       console.error(error);
