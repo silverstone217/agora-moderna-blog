@@ -1,6 +1,6 @@
 import { getAllPost } from "@/actions/blogs";
 // import MarkdownRenderer from "@/components/blogs/markdown/MarkdownRenderer";
-import React from "react";
+import React, { Suspense } from "react";
 import MainBlogs from "./MainBlogs";
 import Footer from "@/components/(others)/Footer";
 
@@ -17,7 +17,10 @@ async function BlogPage() {
 
   return (
     <div className="p-4 min-h-screen flex flex-col">
-      <MainBlogs blogs={blogs} />
+      <Suspense fallback={<div>Chargement...</div>}>
+        <MainBlogs blogs={blogs} />
+      </Suspense>
+
       <div className="mt-auto">
         <Footer />
       </div>
