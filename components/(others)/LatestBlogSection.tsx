@@ -43,7 +43,7 @@ const LatestBlogSection = ({ blogs }: Props) => {
           {blogs.map((blog, index) => (
             <Link
               key={index}
-              href={`/blog/${blog.slug}`}
+              href={`/blogs/${blog.slug}`}
               className="flex items-center gap-3 group rounded-lg transition hover:bg-muted/50 p-2"
             >
               <Image

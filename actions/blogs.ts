@@ -75,3 +75,15 @@ export const getAllPost = async () => {
   });
   return blogs ?? [];
 };
+
+export const getPostBySlugWithUser = async (slug: string) => {
+  const blog = await prisma.blog.findUnique({
+    where: {
+      slug,
+    },
+    include: {
+      user: true,
+    },
+  });
+  return blog ?? null;
+};

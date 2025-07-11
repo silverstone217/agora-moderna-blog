@@ -3,6 +3,7 @@ import React from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import { playfairDisplay } from "@/utils/fonts";
 
 const components: Components = {
   h1: ({ node, ...props }) => (
@@ -62,9 +63,15 @@ const components: Components = {
   ),
 };
 
-const MarkdownRenderer = ({ content }: { content: string }) => {
+const MarkdownRenderer = ({
+  content,
+  className,
+}: {
+  content: string;
+  className?: string;
+}) => {
   return (
-    <article className="prose max-w-none">
+    <article className={"prose max-w-none " + className}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}

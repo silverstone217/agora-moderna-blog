@@ -64,3 +64,19 @@ export function returnDataByValue(
 
   return result || { label: "", value: "" };
 }
+
+// duration for reading blog
+export function estimateReadingTime(content: string): string {
+  // Suppression des balises HTML, si contenu brut HTML
+  const plainText = content.replace(/<[^>]+>/g, "");
+  const words = plainText.trim().split(/\s+/).length;
+
+  const wordsPerMinute = 200;
+  const minutes = Math.ceil(words / wordsPerMinute);
+
+  if (minutes < 4) {
+    return `${minutes} minute${minutes > 1 ? "s" : ""}`;
+  } else {
+    return "Long à lire";
+  }
+}
