@@ -3,14 +3,13 @@ import { ThemeSwitch } from "@/components/ThemeSwitch";
 import { cn } from "@/lib/utils";
 import { unifrakturCook } from "@/utils/fonts";
 import { HomeLinksPage } from "@/utils/links";
-import { Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { Input } from "../ui/input";
 import { useUser } from "@/hooks/getUser";
 import UserAvatar from "../UserAvatar";
 import SmallScreenSheetNav from "./SmallScreenSheetNav";
+import { SignWithGoogle } from "../userAuthActions";
 
 const Header = () => {
   const pathname = usePathname();
@@ -44,21 +43,21 @@ const Header = () => {
 
         {/* other part */}
         <div className="flex items-center gap-4 transition-all duration-300 ease-in-out">
-          {/* search */}
-          <div className="relative text-xs font-medium mr-2 lg:block hidden">
-            <Search className="absolute top-1/2 left-2 transform -translate-y-1/2 opacity-75 size-5" />
-            <Input className="pl-10" type="search" placeholder="blog..." />
-          </div>
-
           {/* theme */}
           <ThemeSwitch />
 
-          {/* profile user */}
-          {user && (
-            <Link href={"/overview"} className="lg:block hidden">
-              <UserAvatar name={user.name} image={user.image} />
-            </Link>
-          )}
+          {/* sign in  && profile user*/}
+          <div className="hidden lg:block">
+            {user ? (
+              <Link href={"/overview"} className="lg:block hidden">
+                <UserAvatar name={user.name} image={user.image} />
+              </Link>
+            ) : (
+              <div className="px-2 w-full">
+                <SignWithGoogle />
+              </div>
+            )}
+          </div>
 
           {/* menu */}
           <SmallScreenSheetNav />

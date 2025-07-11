@@ -9,7 +9,7 @@ import {
   X,
   Loader2,
 } from "lucide-react";
-import React, { Suspense, useMemo, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -27,14 +27,22 @@ import { Input } from "@/components/ui/input";
 import SelectCategory from "@/components/blogs/SelectCategory";
 import { cn } from "@/lib/utils";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
+import { useSearchParams } from "next/navigation";
 
 type Props = {
   blogs: Blog[];
 };
 
 const MainBlogs = ({ blogs }: Props) => {
+  const searchParams = useSearchParams();
   const [searchText, setSearchText] = useState("");
   const [category, setCategory] = useState("");
+
+  useEffect(() => {
+    // Récupérer la valeur du paramètre "search"
+    const search = searchParams.get("search") ?? "";
+    setSearchText(search);
+  }, [searchParams]);
 
   const filteredBlogs = useMemo(() => {
     const search = searchText.toLocaleLowerCase();
@@ -46,7 +54,8 @@ const MainBlogs = ({ blogs }: Props) => {
             .replace(/,/g, " ")
             .toLocaleLowerCase()
             .includes(search.replace(/#/g, ""));
-          return titleMatch || tagsMatch;
+          const categoryMatch = blog.category.includes(search);
+          return titleMatch || tagsMatch || categoryMatch;
         })
         .filter((blog) => (category ? blog.category === category : true)) ?? []
     );

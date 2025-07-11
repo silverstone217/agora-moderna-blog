@@ -2,6 +2,7 @@ import { getAllPost } from "@/actions/blogs";
 // import MarkdownRenderer from "@/components/blogs/markdown/MarkdownRenderer";
 import React from "react";
 import MainBlogs from "./MainBlogs";
+import Footer from "@/components/(others)/Footer";
 
 async function BlogPage() {
   const blogs = await getAllPost();
@@ -15,8 +16,11 @@ async function BlogPage() {
   }
 
   return (
-    <div className=" p-4">
+    <div className="p-4 min-h-screen flex flex-col">
       <MainBlogs blogs={blogs} />
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </div>
   );
 }
