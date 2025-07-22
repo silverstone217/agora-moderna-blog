@@ -74,10 +74,11 @@ model Blog {
   title String
   slug  String @unique
 
-  content  String
-  tags     String
-  category String
-  image    String
+  content     String
+  tags        String
+  category    String
+  image       String
+  description String
 
   isPublished Boolean @default(false)
 

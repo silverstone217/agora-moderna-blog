@@ -1,22 +1,11 @@
 "use client";
 
 import { Blog } from "@/lib/generated/prisma";
-import {
-  Bookmark,
-  ChevronRight,
-  Filter,
-  Search,
-  X,
-  Loader2,
-} from "lucide-react";
+import { ChevronRight, Filter, Search, X, Loader2 } from "lucide-react";
 import React, { Suspense, useEffect, useMemo, useState } from "react";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { capitalizeFirstLetter, returnDataByValue } from "@/utils/functions";
-import { CategoriesData } from "@/utils/data";
-import { playfairDisplay, unifrakturCook } from "@/utils/fonts";
-import Image from "next/image";
+import { unifrakturCook } from "@/utils/fonts";
 import {
   Popover,
   PopoverContent,
@@ -28,6 +17,7 @@ import SelectCategory from "@/components/blogs/SelectCategory";
 import { cn } from "@/lib/utils";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import { useSearchParams } from "next/navigation";
+import Blogcard from "@/components/blogs/Blogcard";
 
 type Props = {
   blogs: Blog[];
@@ -62,7 +52,7 @@ const MainBlogs = ({ blogs }: Props) => {
   }, [searchText, blogs, category]);
 
   return (
-    <div className="max-w-5xl mx-auto p-6 w-full mt-8 space-y-8">
+    <div className="max-w-6xl mx-auto p-4 lg:p-6 w-full mt-8 space-y-8">
       {/* Header avec breadcrumb */}
       <nav
         aria-label="Breadcrumb"
@@ -114,7 +104,7 @@ const MainBlogs = ({ blogs }: Props) => {
                 </div>
               }
             >
-              <BlogCard blog={blog} />
+              <Blogcard key={blog.id} blog={blog} />
             </Suspense>
           ))
         ) : (
@@ -133,66 +123,66 @@ const MainBlogs = ({ blogs }: Props) => {
 export default MainBlogs;
 
 // BlogCard améliorée
-const BlogCard = ({ blog }: { blog: Blog }) => {
-  const itemCategory = returnDataByValue(CategoriesData, blog.category);
-  const { label, icon: IconCategory, color: ColorCategory } = itemCategory;
+// const BlogCard = ({ blog }: { blog: Blog }) => {
+//   const itemCategory = returnDataByValue(CategoriesData, blog.category);
+//   const { label, icon: IconCategory, color: ColorCategory } = itemCategory;
 
-  return (
-    <Card
-      className="group cursor-pointer transition-shadow hover:shadow-lg 
-     duration-300 ease-in-out"
-    >
-      <Link href={`/blogs/${blog.slug}`} className="flex flex-col h-full">
-        <div className="relative h-48 w-full rounded-t-lg overflow-hidden shadow-sm -mt-6">
-          <Image
-            src={blog.image}
-            alt={blog.title}
-            fill
-            sizes="(max-width: 768px) 100vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-            priority
-          />
-        </div>
+//   return (
+//     <Card
+//       className="group cursor-pointer transition-shadow hover:shadow-lg
+//      duration-300 ease-in-out"
+//     >
+//       <Link href={`/blogs/${blog.slug}`} className="flex flex-col h-full">
+//         <div className="relative h-48 w-full rounded-t-lg overflow-hidden shadow-sm -mt-6">
+//           <Image
+//             src={blog.image}
+//             alt={blog.title}
+//             fill
+//             sizes="(max-width: 768px) 100vw, 33vw"
+//             className="object-cover transition-transform duration-500 group-hover:scale-110"
+//             priority
+//           />
+//         </div>
 
-        <CardContent className="flex flex-col flex-grow p-4">
-          <h2
-            className={`text-xl font-semibold line-clamp-3 mb-2 ${playfairDisplay.className}`}
-          >
-            {capitalizeFirstLetter(blog.title)}
-          </h2>
-          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-            {IconCategory && (
-              <IconCategory
-                className="w-5 h-5 flex-shrink-0"
-                color={ColorCategory}
-                aria-hidden="true"
-              />
-            )}
-            <span className={`${playfairDisplay.className}`}>{label}</span>
-          </div>
-        </CardContent>
+//         <CardContent className="flex flex-col flex-grow p-4">
+//           <h2
+//             className={`text-xl font-semibold line-clamp-3 mb-2 ${playfairDisplay.className}`}
+//           >
+//             {capitalizeFirstLetter(blog.title)}
+//           </h2>
+//           <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+//             {IconCategory && (
+//               <IconCategory
+//                 className="w-5 h-5 flex-shrink-0"
+//                 color={ColorCategory}
+//                 aria-hidden="true"
+//               />
+//             )}
+//             <span className={`${playfairDisplay.className}`}>{label}</span>
+//           </div>
+//         </CardContent>
 
-        <CardFooter className="flex gap-4 p-4 pt-0 mt-auto">
-          <Button
-            variant="outline"
-            className="flex-grow justify-center gap-2"
-            aria-label={`Lire l'article ${blog.title}`}
-          >
-            Lire <ChevronRight />
-          </Button>
+//         <CardFooter className="flex gap-4 p-4 pt-0 mt-auto">
+//           <Button
+//             variant="outline"
+//             className="flex-grow justify-center gap-2"
+//             aria-label={`Lire l'article ${blog.title}`}
+//           >
+//             Lire <ChevronRight />
+//           </Button>
 
-          <Button
-            variant="secondary"
-            className="flex-grow justify-center gap-2"
-            aria-label={`Enregistrer l'article ${blog.title}`}
-          >
-            Save <Bookmark />
-          </Button>
-        </CardFooter>
-      </Link>
-    </Card>
-  );
-};
+//           <Button
+//             variant="secondary"
+//             className="flex-grow justify-center gap-2"
+//             aria-label={`Enregistrer l'article ${blog.title}`}
+//           >
+//             Save <Bookmark />
+//           </Button>
+//         </CardFooter>
+//       </Link>
+//     </Card>
+//   );
+// };
 
 // Popover pour filtres (responsive + accessible)
 type FilterType = {

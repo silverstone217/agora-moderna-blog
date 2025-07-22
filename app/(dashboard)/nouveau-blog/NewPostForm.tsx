@@ -21,6 +21,7 @@ import { Loader2 } from "lucide-react";
 import MarkdownInput from "@/components/blogs/markdown/MarkdownInput";
 import { addNewBlog, AddNewBlogType } from "@/actions/blogs";
 import { useRouter } from "next/navigation";
+import { Textarea } from "@/components/ui/textarea";
 
 const NewPostForm = () => {
   const [title, setTitle] = useState("");
@@ -29,6 +30,7 @@ const NewPostForm = () => {
   const [tags, setTags] = useState("");
   const [isPublished, setIsPublished] = useState(false);
   const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
 
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -40,15 +42,17 @@ const NewPostForm = () => {
       isEmpyString(content) ||
       isEmpyString(image) ||
       isEmpyString(category) ||
-      isEmpyString(tags)
+      isEmpyString(tags) ||
+      isEmpyString(description)
     ) {
       return true;
     }
     return false;
-  }, [category, content, image, loading, tags, title]);
+  }, [category, content, description, image, loading, tags, title]);
 
   const handleSubmit = async () => {
     setLoading(true);
+
     try {
       const formData: AddNewBlogType = {
         tags,
@@ -57,6 +61,7 @@ const NewPostForm = () => {
         isPublished,
         content,
         image,
+        description: description,
       };
 
       const result = await addNewBlog(formData);
@@ -73,6 +78,7 @@ const NewPostForm = () => {
       setTags("");
       setIsPublished(false);
       setImage("");
+      setDescription("");
 
       router.refresh();
     } catch (error) {
@@ -84,7 +90,7 @@ const NewPostForm = () => {
   };
 
   return (
-    <Card className="mx-auto max-w-lg w-full">
+    <Card className="mx-auto max-w-2xl w-full">
       <CardHeader>
         <CardTitle
           className={`${playfairDisplay.className} text-4xl font-bold`}
@@ -141,6 +147,21 @@ const NewPostForm = () => {
             category={category}
             setCategory={setCategory}
             disabled={loading}
+          />
+        </div>
+
+        {/* description */}
+        <div className="grid w-full items-center gap-2">
+          <Label htmlFor="description">Description</Label>
+          <Textarea
+            id="description"
+            placeholder={"Quel genre de contenu, en bref!"}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            minLength={10}
+            maxLength={500}
+            disabled={loading}
+            className="min-h-28 max-h-40"
           />
         </div>
 

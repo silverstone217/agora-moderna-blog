@@ -49,6 +49,7 @@ export const addNewBlog = async (data: AddNewBlogType) => {
         isPublished: validated.isPublished,
         tags,
         userId: user.id!,
+        description: validated.description,
       },
     });
 

@@ -48,7 +48,7 @@ export function capitalizeFirstLetter(str: string): string {
 }
 
 // return Data by value
-type DataValueType = {
+export type DataValueType = {
   label: string;
   value: string;
   icon?: ForwardRefExoticComponent<

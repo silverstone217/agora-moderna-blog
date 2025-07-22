@@ -14,7 +14,7 @@ const links = [
 export default function Footer() {
   return (
     <footer className="w-full border-t border-border bg-background/80 dark:bg-background/90 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center md:justify-between gap-6">
+      <div className="max-w-6xl mx-auto px-4 py-8 flex flex-col lg:flex-row items-center lg:justify-between gap-6">
         {/* Logo & Title */}
         <div className="flex items-center gap-3">
           <span className="rounded-full bg-primary/10 p-2">
@@ -41,7 +41,7 @@ export default function Footer() {
         </nav>
 
         {/* Socials and Newsletter */}
-        <div className="flex flex-col items-center md:items-end gap-4 md:gap-3">
+        <div className="flex flex-col items-center lg:items-end gap-4 lg:gap-3">
           {/* Socials */}
           <div className="flex gap-3">
             <a
@@ -73,7 +73,7 @@ export default function Footer() {
 
           {/* Newsletter Subscription */}
           <div className="w-full max-w-sm">
-            <p className="text-sm text-muted-foreground text-center md:text-right mb-2">
+            <p className="text-sm text-muted-foreground text-center lg:text-right mb-2">
               Recevez nos dernières actualités et articles directement par
               e-mail.
             </p>

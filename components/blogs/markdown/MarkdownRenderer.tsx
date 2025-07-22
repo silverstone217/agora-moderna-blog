@@ -50,9 +50,13 @@ const components: Components = {
   del: ({ node, ...props }) => <del className="line-through" {...props} />,
   pre: ({ node, ...props }) => (
     <pre
-      className="bg-gray-900 text-green-600 rounded p-4 overflow-x-auto mb-6 font-mono text-sm"
+      className="bg-gray-900 text-white rounded p-4 overflow-x-auto mb-6 font-mono text-sm"
       {...props}
     />
+  ),
+
+  code: ({ node, ...props }) => (
+    <code className=" rounded text-sm " {...props} />
   ),
 
   blockquote: ({ node, ...props }) => (

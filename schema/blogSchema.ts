@@ -11,4 +11,5 @@ export const addNewPostSchema = z.object({
   image: z.string().url(),
   tags: z.string().min(1),
   isPublished: z.boolean().default(false),
+  description: z.string().min(1).max(500),
 });

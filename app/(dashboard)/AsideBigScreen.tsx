@@ -50,7 +50,7 @@ const AsideBigScreen = () => {
                   className={cn(
                     "shrink-0 hover:cursor-pointer",
 
-                    "group-hover:bg-amber-700 hover:bg-amber-700"
+                    "group-hover:bg-gray-600 hover:bg-gray-600 group-hover:text-white"
                   )}
                   size={"icon"}
                   variant={isPathnameSame ? "default" : "secondary"}

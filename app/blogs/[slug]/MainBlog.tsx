@@ -8,9 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import UserAvatar from "@/components/UserAvatar";
-import { capitalizeFirstLetter } from "@/utils/functions";
+import { capitalizeFirstLetter, returnDataByValue } from "@/utils/functions";
 import { playfairDisplay, unifrakturCook } from "@/utils/fonts";
 import { ReadingTime } from "@/components/blogs/ReadingTime";
+import { CategoriesData } from "@/utils/data";
 
 type Props = {
   blogUser: Blog & {
@@ -46,12 +47,17 @@ const MainBlog = ({ blogUser }: Props) => {
 
       {/* Title */}
       <h1
-        className={`mb-4 font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-tight
+        className={`mb-2 font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-tight
       ${unifrakturCook.className}
         `}
       >
         {capitalizeFirstLetter(blog.title)}
       </h1>
+
+      {/* description */}
+      <p className="mb-6 text-sm text-gray-500">
+        {capitalizeFirstLetter(blog.description)}
+      </p>
 
       {/* Meta info */}
       <div
@@ -72,7 +78,7 @@ const MainBlog = ({ blogUser }: Props) => {
         </div>
         <div className="flex flex-wrap gap-2">
           <Badge variant="outline" className="uppercase text-xs font-semibold">
-            {blog.category}
+            {returnDataByValue(CategoriesData, blog.category).label}
           </Badge>
           {tags.map((tag) => (
             <Badge key={tag} variant="secondary" className="text-xs">
@@ -83,7 +89,7 @@ const MainBlog = ({ blogUser }: Props) => {
       </div>
 
       {/* time to read */}
-      <div>
+      <div className="mb-4">
         <ReadingTime content={blog.content} />
       </div>
 
