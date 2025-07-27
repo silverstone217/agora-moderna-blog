@@ -29,6 +29,20 @@ const MainBlog = ({ blogUser }: Props) => {
     dark:prose-invert prose-headings:font-extrabold prose-headings:text-3xl 
     prose-p:text-base prose-p:leading-relaxed"
     >
+      {/* Title */}
+      <h1
+        className={`mb-2 font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-tight
+      ${unifrakturCook.className}
+        `}
+      >
+        {capitalizeFirstLetter(blog.title)}
+      </h1>
+
+      {/* description */}
+      <p className="mb-6 text-sm text-gray-500">
+        {capitalizeFirstLetter(blog.description)}
+      </p>
+
       {/* Image */}
       {blog.image && (
         <div
@@ -45,24 +59,10 @@ const MainBlog = ({ blogUser }: Props) => {
         </div>
       )}
 
-      {/* Title */}
-      <h1
-        className={`mb-2 font-extrabold text-4xl sm:text-5xl lg:text-6xl leading-tight
-      ${unifrakturCook.className}
-        `}
-      >
-        {capitalizeFirstLetter(blog.title)}
-      </h1>
-
-      {/* description */}
-      <p className="mb-6 text-sm text-gray-500">
-        {capitalizeFirstLetter(blog.description)}
-      </p>
-
       {/* Meta info */}
       <div
         className={`flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 
-      text-sm text-muted-foreground `}
+      text-sm text-muted-foreground flex-wrap`}
       >
         <div className="flex items-center gap-3 mb-3 sm:mb-0">
           {user && <UserAvatar image={user.image} name={user.name} />}

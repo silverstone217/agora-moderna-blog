@@ -20,7 +20,7 @@ const NewestBlog = ({ blogs }: Props) => {
       >
         Nouveaux articles
       </h2>
-      <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 xl:grid-cols-3">
         {blogs.map((blog) => {
           return <Blogcard key={blog.id} blog={blog} />;
         })}

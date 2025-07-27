@@ -120,8 +120,7 @@ export const columnsBlogs: ColumnDef<Blog>[] = [
             size="icon"
             aria-label="Modifier l'article"
             onClick={() => {
-              // Logique modifier (ex: navigation)
-              console.log("Modifier", blogId);
+              location.replace(`/mes-blogs/${blogSlug}`);
             }}
             className="text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900"
           >
@@ -133,7 +132,6 @@ export const columnsBlogs: ColumnDef<Blog>[] = [
             size="icon"
             aria-label="Lire l'article"
             onClick={() => {
-              // Logique lire (ex: navigation)
               window.open(`/blogs/${blogSlug}`, "_blank");
             }}
             className="text-green-600 hover:bg-green-50 dark:text-green-400 dark:hover:bg-green-900"
